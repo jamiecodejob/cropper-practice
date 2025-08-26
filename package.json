@@ -18,6 +18,7 @@
     "@nuxt/ui": "^3.3.2",
     "@unhead/vue": "^2.0.14",
     "better-sqlite3": "^12.2.0",
+    "cropperjs": "^2.0.1",
     "eslint": "^9.34.0",
     "nuxt": "^4.0.3",
     "typescript": "^5.9.2",
