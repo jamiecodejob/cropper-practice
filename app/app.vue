@@ -61,9 +61,41 @@ async function onCrop() {
   const selection = cropper.value?.getCropperSelection();
   if (!selection) return alert("沒有選取框");
 
+  // 先拿到裁切後的 Canvas
   const canvas = await selection.$toCanvas({ width: 400, height: 400 });
+
+  // A) 預覽：顯示在畫面上（可留可拿掉）
   avatarUrl.value = canvas.toDataURL("image/jpeg", 0.92);
-  onClose();
+
+  // B) 上傳：轉成 Blob（JPEG）
+  const blob: Blob = await new Promise((resolve, reject) => {
+    canvas.toBlob(
+      (b) => (b ? resolve(b) : reject(new Error("toBlob 失敗"))),
+      "image/jpeg",
+      0.92
+    );
+  });
+
+  // 包成 File（可選，但多數後端喜歡有檔名）
+  const file = new File([blob], "avatar.jpg", { type: "image/jpeg" });
+
+  // 用 FormData 上傳
+  const fd = new FormData();
+  fd.append("file", file);
+
+  try {
+    // 假設你的後端路由是 /api/avatar（Nitro/自家後端）
+    const res = await $fetch<{ url: string }>("/api/avatar", {
+      method: "POST",
+      body: fd, // 不要自己設 Content-Type，瀏覽器會自動帶 boundary
+    });
+    // 伺服器回傳的公開 URL（若有），可直接套用
+    if (res?.url) avatarUrl.value = res.url;
+    onClose();
+  } catch (err) {
+    console.error("upload error", err);
+    alert("上傳失敗");
+  }
 }
 
 function onClose() {
