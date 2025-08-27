@@ -10,6 +10,13 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@cropper/element-canvas": "^2.0.1",
+    "@cropper/element-crosshair": "^2.0.1",
+    "@cropper/element-grid": "^2.0.1",
+    "@cropper/element-handle": "^2.0.1",
+    "@cropper/element-image": "^2.0.1",
+    "@cropper/element-selection": "^2.0.1",
+    "@cropper/element-shade": "^2.0.1",
     "@nuxt/content": "^3.6.3",
     "@nuxt/eslint": "^1.9.0",
     "@nuxt/image": "^1.11.0",

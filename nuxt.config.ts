@@ -10,4 +10,10 @@ export default defineNuxtConfig({
     "@nuxt/test-utils",
     "@nuxt/ui",
   ],
+  vue: {
+    compilerOptions: {
+      // 告訴 Vue 這些標籤是自定義元素，不要當作 Vue component 報錯
+      isCustomElement: (tag) => tag.startsWith("cropper-"), // 例如 cropper-canvas, cropper-image
+    },
+  },
 });
